@@ -6,6 +6,18 @@ var mgDB = require( './mgDB' );
 // module of redis
 var Redis = require( './redis');
 
+/**
+function Database ( databaseType, event, action, opt ){
+	this.databaseType = databaseType;
+	this.event = event;
+	this.action = action;
+	this.opt = opt;
+
+	// initiate the database
+	this.initiate();
+}
+**/
+
 /**register event on 'ready' evnets of data**/
 var dataEvents = new events.EventEmitter();
 dataEvents.on( 'ready', getData );
@@ -79,7 +91,7 @@ var docArr = [{
 //mgdb.update( dataEvents, 'update_test', 'test', {name: 'we'}, {$set:{name:'wangbin'}}, {w: 1, multi:true} );
 
 /**init a object of redis**/
-var redis = new Redis( 1 );
+//var redis = new Redis( 1 );
 // hash value object
 var hashObj = {
 	name: 'wangbin',
@@ -88,9 +100,12 @@ var hashObj = {
 	degree: 'bachelor'
 };
 
-redis.hashMultiSet( dataEvents, 'hash_mset_test', 'wangbin:profile', hashObj );
-redis.hashSet( dataEvents, 'hash_set_test', 'wangbin:profile', 'degree', 'doctor' );
-redis.hashGetAll( dataEvents, 'hash_get_test', 'wangbin:profile' );
+//redis.hashMultiSet( dataEvents, 'hash_mset_test', 'wangbin:profile', hashObj );
+//redis.hashSet( dataEvents, 'hash_set_test', 'wangbin:profile', 'degree', 'doctor' );
+//redis.hashGetAll( dataEvents, 'hash_get_test', 'wangbin:profile' );
+
+var now = new Date().getTime();
+console.log( now );
 
 
 

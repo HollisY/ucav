@@ -14,6 +14,8 @@
 var polyArr = [];
 //markers
 var markerArr = [];
+//military icons
+var militaryIconArr = [];
 //the map
 var map;
 
@@ -125,7 +127,12 @@ function resetPoly(event) {
  * get a random color
  */
 function getColor() {
-	return '#000000';
+	var color = '';
+	var int1 = Math.floor( Math.random()*255 );
+	var int2 = Math.floor( Math.random()*255 );
+	var int3 = Math.floor( Math.random()*255 );
+	color += int1.toString(16) + int2.toString(16) + int3.toString(16);
+	return color;
 }
 
 /**
@@ -166,8 +173,9 @@ function showPath () {
 /**
  * set mode to poly/rectangle/circle/polygen/drag, or default
  */
-function Mode (mode) {
+function Mode ( mode, opt ) {
 	this.mode = mode;
+	this.opt = opt
 }
 
 Mode.prototype.resetEvents = function(){
@@ -183,22 +191,74 @@ Mode.prototype.setNewEvent = function(){
 		google.maps.event.addListener(poly, 'rightclick', delPath);//del on rightclick
 		google.maps.event.addListener(poly, 'dblclick', delPath);//del on dblclick
 	}
+
 	else if ( this.mode == 'marker' ) {
-		//not tested yet!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		var marker = setMarker();
-		google.maps.event.addListener( map, 'click', addPath(e,marker) );//add marker
-		google.maps.event.addListener( poly, 'rightclick', delPath );//del on rightclick
-		//var marker = setMarker();
-		
-		//add listener for the click event to draw marker
+		//add a listener for adding/removing marker
+		google.maps.event.addListener( map, 'click', function( event ){
+			// init a marker
+			var marker = setMarker ( event.latLng );	
+			
+			// save to array
+			markerArr.push( marker );
+			
+			// add delete listener
+			google.maps.event.addListener( marker, 'dblclick', function(){
+				
+				// invisible
+				marker.setMap( null );
+				
+				// delete from array
+				for( i in militaryIconArr ){
+					if ( militaryIconArr[i] == marker ){
+						militaryIconArr.splice( i, 1 );
+					}
+				}
+				
+			});
+
+		});
+		//google.maps.event.addListener( poly, 'rightclick', delPath );//del on rightclick
+	}
+
+	else if ( this.mode == 'militaryIcon' ) {
+		var image = new google.maps.MarkerImage(
+			// url
+			'images/mili/' + this.opt + '.png'
+		);
+
+		//add listener for the click event to draw military icon
+		google.maps.event.addListener( map, 'click', function( event ){
+			// init a military icon marker
+			var marker = setMilitaryIcon ( event.latLng, image );	
+
+			// save to array
+			militaryIconArr.push( marker );
+			
+			// add delete listener
+			google.maps.event.addListener( marker, 'dblclick', function(){
+				
+				// invisible
+				marker.setMap( null );
+				
+				// delete from array
+				for( i in militaryIconArr ){
+					if ( militaryIconArr[i] == marker ){
+						militaryIconArr.splice( i, 1 );
+					}
+				}
+				
+			});
+	
+		});
+		//google.maps.event.addListener( poly, 'rightclick', delPath );//del on rightclick
 	}
 }
 
 /**
  * change the mode of operation on map
  */
-function changeMode( mode ) {
-	var myMode = new Mode(mode);
+function changeMode( mode, opt ) {
+	var myMode = new Mode(mode, opt);
 	myMode.resetEvents();
 	myMode.setNewEvent();
 }
@@ -207,9 +267,9 @@ function changeMode( mode ) {
  * listen to user's choice of mode 
  */
 function listenChoice() {
-	var tar = document.getElementById('tools');
+	var tools = document.getElementById('tools');
 
-	tar.addEventListener("click", function(e){
+	tools.addEventListener("click", function(e){
 		var choice;
 
 		if ( e.target ) {
@@ -218,7 +278,7 @@ function listenChoice() {
 		else {
 			choice = e.srcElement.className;
 		}
-	
+			
 		choice = choice.match(/-\w+/g)[0];
 		choice = choice.match(/\w+/)[0];
 		console.log(choice);	
@@ -234,6 +294,22 @@ function listenChoice() {
 			default:
 				break;
 		}
+	});
+
+	var militaryIcon = document.getElementById('military-icon');	
+
+	militaryIcon.addEventListener("click", function(e){
+		var choice;
+
+		if ( e.target ) {
+			choice = e.target.id;
+		}
+		else {
+			choice = e.srcElement.id;
+		}
+			
+		changeMode( 'militaryIcon', choice );
+
 	});
 }
 
@@ -295,8 +371,32 @@ function setMarker (latLng) {
     map: map
   });
 
-	//save to markerArr
+	return marker;
+}
+
+/**
+ * add a new maker, both on the map and into the marker arr
+ **/
+function addMarker( event ) {
+	var marker = setMarker ( event.latLng );
+	
+	// save to array
 	markerArr.push( marker );
+}
+
+/**
+ * set a military icon
+ */
+function setMilitaryIcon ( latLng, image ) {	
+	var marker = new google.maps.Marker({
+    position: latLng,
+    title: '#' + markerArr.length,
+    map: map,
+		icon: image
+  });
 
 	return marker;
 }
+
+
+

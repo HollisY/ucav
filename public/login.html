@@ -11,10 +11,13 @@
 	<link rel="stylesheet" href="css/bootstrap-switch.min.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/login.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/login.js"></script>
 </head>
 <body>
 		<div id="login" class="login">
-			<h1>UCAV仿真平台</h1>
+			<h1>平台登陆</h1>
 			<form name="loginform" id="loginform" action="login_auth" method="post">
 				<p>
 					<label for="user_login">用户名<br>
@@ -36,9 +39,10 @@
 				</p>
 			</form>
 			<p id="nav">
-				<a href="localhost:3000/" title="找回密码">忘记密码？</a>
+				<a href="localhost:3000/login.html" title="找回密码">忘记密码？</a>
 			</p>
 	</div>
+	<div id="dialog" title="登陆确认"></div>
 </body>
 </html>
 

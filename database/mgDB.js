@@ -58,7 +58,7 @@ mgDB.prototype.find = function( event, act, collection, query, fields, option ){
 		// choose the collection
 		var cl = db.collection( collection );
 			
-		// find oprationa
+		// find operation
 		cl.find( query, fields, option ).toArray(function(err, result) {
 			if( err ) {
 				throw err;

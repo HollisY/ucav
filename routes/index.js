@@ -1,6 +1,9 @@
 var express = require('express');
+// depend on router mudule to handle catch router info of request
 var router = express.Router();
 var http = require('http'); 
+
+var add = require( '../add' );
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -11,30 +14,45 @@ router.get('/routertest', function(req, res) {
 	res.render('index', { title: 'Express is running'});
 });
 
+var calcObj = [];
+var resultObj = [];
+
 router.get('/matlab', function (req, res) {
 	
 	if ( req.param('ready') == 'true' ) {
-		var data = {
-			timestamp: 1001001,
-			data: [1, 2, 3, 4, 5]
-		};
+		if( calcObj.length > 0 ){
+			var data = calcObj.shift();
 
-		res.json(data);
+			res.json( data );
+		}else{
+			res.json( {tasktype:'none', num:3} );
+		}
 
-		if ( req.param('path') ) {
+
+		if ( req.param('pathName') ) {
 			var options = {
-				host: '192.168.1.109',
-				port: '80',
-				path: req.param('path'),
+				host: add.matlab.host,
+				port: add.matlab.port,
+				path: req.param('pathName'),
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-					'Content-Length': postdata.length
+					'Content-Type': 'application/x-www-form-urlencoded'
 					}
 			};
 
+
 			var req = http.request(options, function(res) {
-				console.log(res);
+				var body = '';
+				res.setEncoding( 'utf8');
+				res.on('data', function (chunk) {
+					body += chunk;
+				});
+
+				res.on( 'end', function() {
+					var result = JSON.parse(body);
+					console.log( result );
+					resultObj.push( result );
+				});
 			});
 
 			req.on('error', function(e) {
@@ -43,6 +61,7 @@ router.get('/matlab', function (req, res) {
 
 			req.write('name=wb&host=ubuntu');
 			req.end();
+
 
 		}
 	}
@@ -53,18 +72,37 @@ router.get('/client', function (req, res) {
 	//console.log( req.params );
 	//res.json({ name: 'wb' });
 	
-	var data = {};
+	var data = req.query;
+	if ( 'data' == data.state ){
+		// convert string form digit to real digti from the get request
+		var data = JSON.stringify( req.query );
+		data = data.replace(/"(\d+)"/g, "$1");
+		data = JSON.parse( data );
+		calcObj.push( data );
 
+		//var result = JSON.parse( req.query );
+		//console.log( result );
+		res.jsonp({state: 'calculating'});
+
+	} else if ( 'check' == data.state ){
+		if ( resultObj.length > 0 ){
+			var re = resultObj.shift();
+			res.jsonp( re );
+		}
+		else{
+			res.jsonp( {state: 'calculating'} );
+		}
+	}
+	
+	/**
 	if ( req.query ) {
 		for ( var i in req.query ) {
 			console.log( i + ' -> ' + req.query[i] );
 			data[i] = req.query[i];
 		}
 	}
-	console.log("req.params");
-  console.log( req.params );
+	**/
   
-	res.jsonp( data );
 
 	/**
   res.header('Content-Type', 'application/json');
@@ -76,5 +114,5 @@ router.get('/client', function (req, res) {
 	
 
 });
-
+// router module is exposed to the outside calling
 module.exports = router;
