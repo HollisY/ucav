@@ -1,0 +1,82 @@
+#wrapper_cpt {
+    font-size:18px;
+    height:500px;
+    width: 624px;
+    color: #fff;
+    position:relative;
+    background:#fff;
+    border:1px solid #D8DFEA;
+	float:left;
+}
+
+
+#wrapper_cpt_table 
+{   text-align: center;
+	height:400px;
+	    width: 600px;
+    color: #fff;
+    position:relative;
+    background:#ddd;
+    border:1px solid #D8DFEA;
+	float:left;
+    margin: 20px 10px;
+}
+#wrapper_cpt_table input
+{	float: right;
+width:100%;
+border: none;
+background: transparent;
+color: #fff;
+}
+#wrapper_cpt_table table, th, td
+{
+border: 1px solid black;
+border-collapse:collapse;
+}
+
+#wrapper_cpt button
+{-webkit-box-shadow:0 1px 0 rgba(15, 15, 15, 0.3);
+    -moz-box-shadow:0 1px 0 rgba(15, 15, 15, 0.3);
+    box-shadow:0 1px 0 rgba(15, 15, 15, 0.3);
+    background-color: #519dde;
+    border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    font-weight: bolder;
+    font-size: 18px;
+    margin-left: 55px;
+    margin-top: 20px;
+}
+
+#nondename a
+{
+font-size: 99px;
+background: #000;
+}
+
+
+
+.cpt_parentname
+{   width: 50px;
+    color: #fff;
+    position:relative;
+    background:#755;
+}
+.cpt_statename
+{   width: 70px;
+    color: #fff;
+    position:relative;
+    background:#999;
+
+}
+.cpt_parentvalue
+{   
+    color: #fff;
+    position:relative;
+    background:#955;
+
+}
+.cpt_statevalue
+{   
+    color: #fff;
+    position:relative;
+    background:#a99;
+}

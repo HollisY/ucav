@@ -17,6 +17,100 @@ router.get('/routertest', function(req, res) {
 var calcObj = [];
 var resultObj = [];
 
+
+router.get('/hackthon-data', function (req, res){
+
+	if (req.session) {
+		req.session.visit ++;
+	}else {
+		req.session.visit = 0;
+	}
+	console.log(req.session.visit);
+
+		
+
+	var data = {
+	  "data": [
+	    {
+	      "DT_RowId": "row_1",
+	      "first_name": "Tiger",
+	      "last_name": "Nixon",
+	      "position": "System Architect",
+	      "email": "t.nixon@datatables.net",
+	      "office": "Edinburgh",
+	      "extn": "5421",
+	      "age": "61",
+	      "salary": "320800",
+	      "start_date": "2011-04-25"
+	    },
+	    {
+	      "DT_RowId": "row_2",
+	      "first_name": "Garrett",
+	      "last_name": "Winters",
+	      "position": "Accountant",
+	      "email": "g.winters@datatables.net",
+	      "office": "Tokyo",
+	      "extn": "8422",
+	      "age": "63",
+	      "salary": "170750",
+	      "start_date": "2011-07-25"
+	    },
+	    {
+	      "DT_RowId": "row_3",
+	      "first_name": "Ashton",
+	      "last_name": "Cox",
+	      "position": "Junior Technical Author",
+	      "email": "a.cox@datatables.net",
+	      "office": "San Francisco",
+	      "extn": "1562",
+	      "age": "66",
+	      "salary": "86000",
+	      "start_date": "2009-01-12"
+	    },
+	    {
+	      "DT_RowId": "row_4",
+	      "first_name": "Cedric",
+	      "last_name": "Kelly",
+	      "position": "Senior Javascript Developer",
+	      "email": "c.kelly@datatables.net",
+	      "office": "Edinburgh",
+	      "extn": "6224",
+	      "age": "22",
+	      "salary": "433060",
+	      "start_date": "2012-03-29"
+	    },
+	    {
+	      "DT_RowId": "row_5",
+	      "first_name": "Airi",
+	      "last_name": "Satou",
+	      "position": "Accountant",
+	      "email": "a.satou@datatables.net",
+	      "office": "Tokyo",
+	      "extn": "5407",
+	      "age": "33",
+	      "salary": "162700",
+	      "start_date": "2008-11-28"
+	    },
+	    {
+	      "DT_RowId": "row_6",
+	      "first_name": "Brielle",
+	      "last_name": "Williamson",
+	      "position": "Integration Specialist",
+	      "email": "b.williamson@datatables.net",
+	      "office": "New York",
+	      "extn": "4804",
+	      "age": "61",
+	      "salary": "372000",
+	      "start_date": "2012-12-02"
+	    }],
+	    
+	    "options": [],
+  		"files": []
+	};
+
+	res.json(data);
+});
+
 router.get('/matlab', function (req, res) {
 	
 	if ( req.param('ready') == 'true' ) {
@@ -82,7 +176,7 @@ router.get('/client', function (req, res) {
 
 		//var result = JSON.parse( req.query );
 		//console.log( result );
-		res.jsonp({state: 'calculating'});
+		res.jsonp({state: 'Server receive data'});
 
 	} else if ( 'check' == data.state ){
 		if ( resultObj.length > 0 ){
@@ -90,7 +184,7 @@ router.get('/client', function (req, res) {
 			res.jsonp( re );
 		}
 		else{
-			res.jsonp( {state: 'calculating'} );
+			res.jsonp( {state: 'Empty results'} );
 		}
 	}
 	

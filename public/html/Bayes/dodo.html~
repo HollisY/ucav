@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" >
+		<title> 贝叶斯</title>
+		<link rel="stylesheet" type="text/css" href="css/bys-style.css" >
+		<link rel="stylesheet" type="text/css" href="css/bys-style1.css" >
+		<link rel="stylesheet" type="text/css" href="css/bys-CPT.css" >
+
+		<link rel="stylesheet" type="text/css" href="css/bys-jquery.jscrollpane.codrops2.css" >
+
+	    <script src="js/jquery.js"></script>
+	    
+		<script src="js/bys.js"></script>
+		<script src="js/CPT.js"></script>
+		<script src="js/line.js"></script>
+		 <script src="js/simul.js"></script>
+		<script src="js/Save.js"></script>
+		<script src="js/Read.js"></script>
+		<script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+
+		<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+		<!-- the jScrollPane script -->
+		<script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" src="js/scroll-startstop.events.jquery.js"></script>
+
+	    <script src="js/main.js"></script>
+	</head>
+	    <div id="Enter">
+	    <div id="Enter-top"></div>
+	    </div>
+
+        <header>
+
+            <nav id="top"><a>贝叶斯算法评估工具</a>
+                <ul>
+                    <li class="header-button" id='Readme'><a>使用说明</a></li>
+                    <li class="header-button" id='test'><a>拓扑结构图</a></li>
+                </ul>
+            </nav>
+        </header>
+		<body>
+
+		<div id="wrapper">
+		<div id="HelpDiv"></div>
+		 <div id="right-panel">
+		       <ul>
+                    <li class="right-panel-button" id="_node"><a>添加贝叶斯节点</a></li>
+                    <li class="right-panel-button" id="_link"><a>连接父子节点</a></li>
+                    <li class="right-panel-button" id='_simulate'><a>开始仿真</a></li>
+                    <li class="right-panel-button" id="_save"><a>保存</a></li>
+                    <li class="right-panel-button" id="_read"><a>读取</a></li>
+                    
+                </ul>
+               
+            </div>
+	
+		<div id="BackH"></div>
+	
+</div>
+
+<div id="nodemodal">
+		<h1>节点信息录入</h1>
+	    <h2 style="height:2em;"></h2>
+	    <form>
+		<label for="username">节点名称:</label>
+		<input type="text"id="username" name="username" class="txtfield" tabindex="1" />
+	
+		<label for="password">状态数目:</label>
+		<input type="text" id="password" class="txtfield" tabindex="2" />
+	  
+		<div style="float:left;"><input type="button" id="loginbtn" class="flatbtn-blu hidemodal" value="确定" tabindex="3"></div>
+		<div style="margin-left:150px;"><input type="button" id="cancelbtn" class="flatbtn-blu hidemodal" value="取消" tabindex="3"></div>
+       </form>
+	</div>
+
+<div id="wrapper_cpt" style="display:none">
+	<!--div id="nodename"><h2>条件概率表</h2></div-->
+	<div id="wrapper_cpt_table"></div>
+</div>
+
+
+
+
+
+
+
+
+
+		</body>
+</html>
+

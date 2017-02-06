@@ -3,6 +3,7 @@ var path = require( 'path' );
 var favicon = require( 'static-favicon' );
 var logger = require( 'morgan' );
 var cookieParser = require( 'cookie-parser' );
+var expSession = require( 'express-session' );
 var bodyParser = require( 'body-parser' );
 
 var routes = require( './routes/index' );
@@ -19,6 +20,10 @@ app.use( logger('dev') );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded() );
 app.use( cookieParser() );
+app.use( expSession({
+    secret: 'my little cat on the keyboard',
+    cookie: { maxAge: 60*1000 }
+}) );
 app.use( '/action', express.static( path.join( __dirname, 'public' ) ) );
 app.use( '/images', express.static( path.join( __dirname, 'public/images' ) ) );
 app.use( '/js', express.static( path.join( __dirname, 'public/js' ) ) );
